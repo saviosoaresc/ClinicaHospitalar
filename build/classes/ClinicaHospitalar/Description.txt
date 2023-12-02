@@ -1,0 +1,44 @@
+Desenvolver um sistema que permita aos usuários cadastrarem médicos
+e pacientes, pesquisar disponibilidade de médicos, marcar consultas, 
+remarcar consultas e cancelar consultas.
+
+SHELL
+//adicionar medico
+addMed nome telefone especialidade
+
+//adicionar paciente
+$addPac nome telefone diagnostico
+
+//show
+$show
+===== Pacientes ====
+[#476: joao: avc]
+===== Medicos ====
+[#240: savio: GERAL]
+===== Consultas ====
+[Paciente: 594/joao, Medico: caio/OFTALMOLOGISTA, Diagnostico: prostata, Tipo: 500.0, Data: 19/12/2023]
+
+
+
+//verificar qual especialidade eh mais recomendado pro paciente
+$diagnostico diagnostico
+
+//adicionar consulta
+$addCons idPac nomePac nomeMed data
+
+//remarcar consulta
+$remarcarCons idPac nomePac
+
+// informacoes do Paciente
+$infoPac idPac nomePac
+
+// informacoes do Medicos
+$infoMed nomeMed
+
+//cancelar consulta
+$cancelarCons idPac nomePac
+
+//remover paciente 
+$removePac idPac nomePac
+
+======================================= FAZER ==================================
