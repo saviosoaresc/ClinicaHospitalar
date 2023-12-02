@@ -109,8 +109,31 @@ public class Sql {
             }
         }
     }
-//======================= MEDICO ==================================
 
+    public void removerPaciente(int idPac, String nomePac) {
+        String sql = "DELETE FROM pacientes"
+                + " WHERE numero_registro_paciente = ? AND nome = ?";
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, idPac);
+            pst.setString(2, nomePac);
+            pst.executeUpdate();
+            //da um fail: comando invalido
+            ClinicaHospitalar.print("Paciente " + nomePac + " deletado");
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+    }
+
+//======================= MEDICO ==================================
     public void adicionarMedico(String nome, String telefone, Label especializacao) {
         String sql = "insert into medicos(nome, telefone, especializacao) values(?, ?, ?)";
         try {
@@ -189,6 +212,27 @@ public class Sql {
         }
     }
 
+    public void removerMedico(String nomeMed) {
+        String sql = "DELETE FROM medicos"
+                + " WHERE nome = ?";
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1, nomeMed);
+            pst.executeUpdate();
+            ClinicaHospitalar.println("Medico(a) " + nomeMed + " dispensado(a)");
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+    }
+
 //======================= CONSULTA ==================================
     public void adicionarConsulta(int idPac, String nomePac, String nomeMed, Label especializacao, String diagnostico, String dataCons, String tipo, double valor) {
         String sql = "insert into consultas values(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -230,7 +274,7 @@ public class Sql {
             result.append("[Paciente: ").append(rs.getInt(1)).append("/").append(rs.getString(2))
                     .append(", Medico: ").append(rs.getString(3)).append("/").append(rs.getString(4))
                     .append(", Diagnostico: ").append(rs.getString(5))
-                    .append(", Tipo: ").append(rs.getString(7)).append("/").append(rs.getString(8))
+                    .append(", Tipo: ").append(rs.getString(7)).append("/").append(rs.getString(8)).append("$")
                     .append(", Data: ").append(rs.getString(6)).append("]\n");
         }
 
@@ -243,7 +287,7 @@ public class Sql {
 
     public void remarcarConsulta(int idPac, String nomePac, String data) {
         String sql = "UPDATE consultas SET datacons = ?"
-                  + " WHERE idpac = ? and nomepac = ?";
+                + " WHERE idpac = ? and nomepac = ?";
         try {
             pst = connection.prepareStatement(sql);
             pst.setString(1, data);
@@ -263,7 +307,7 @@ public class Sql {
             }
         }
     }
-    
+
     public void removerConsulta(int idPac, String nomePac) {
         String sql = "DELETE FROM consultas"
                 + " WHERE idpac = ? AND nomepac = ?";
@@ -286,29 +330,21 @@ public class Sql {
         }
     }
 
-    
-    
-    public void removerPaciente(int idPac, String nomePac) {
-        String sql = "DELETE FROM pacientes"
-                + " WHERE numero_registro_paciente = ? AND nome = ?";
-        try {
-            pst = connection.prepareStatement(sql);
-            pst.setInt(1, idPac);
-            pst.setString(2, nomePac);
-            pst.executeUpdate();
-            //da um fail: comando invalido
-            ClinicaHospitalar.print("Paciente " + nomePac + " deletado");
-        } catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
-            }
+    public String getNomeDoPacienteNaConsultaDoMedico(String nomeMed) throws SQLException {
+        StringBuilder result = new StringBuilder();
+        String sql = "select idpac, nomepac from consultas where nomemed = ?";
+        pst = connection.prepareStatement(sql);
+        pst.setString(1, nomeMed);
+        rs = pst.executeQuery();
+
+        while (rs.next()) {
+            result.append("[").append(rs.getInt(1)).append(" - ").append(rs.getString(2)).append("]\n");
+        }
+
+        if (result.length() == 0) {
+            return "Vazio";
+        } else {
+            return result.toString();
         }
     }
-
 }
