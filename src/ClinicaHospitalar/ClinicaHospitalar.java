@@ -10,16 +10,8 @@ import java.util.Scanner;
  * @author savio
  */
 
-
-
-
-//erro no diagnostico, ele so pega a ultima palavra
-
-
-
-
+// ao apagar uma consulta, nas lista de pacientes do medico, n eh deletado
 public class ClinicaHospitalar {
-
     public static void main(String args[]) throws SQLException, Exception {
         Clinica clinica = new Clinica();
         Sql sql = new Sql();
@@ -28,8 +20,7 @@ public class ClinicaHospitalar {
         System.out.println("- addPac    - addMed     - addCons");
         System.out.println("- infoPac   - infoMed    - remarcarCons");
         System.out.println("- removePac   - removeMed  - removeCons");
-        System.out.println("- diagosnito  - show   - end   - cls");
-        
+        System.out.println("- diagosnito  - show   - end   - cls");        
 
         while (true) {
             String line = input();
@@ -162,7 +153,7 @@ public class ClinicaHospitalar {
                         println(clinica.infoMedico(nomeMed));
                         break;
                     }
-                    case "removecons": {
+                    case "removercons": {
                         print("ID DO PACIENTE: ");
                         int numRegPac = number(input());
                         print("NOME DO PACIENTE: ");
@@ -170,12 +161,18 @@ public class ClinicaHospitalar {
                         sql.removerConsulta(numRegPac, nomePac);
                         break;
                     }
-                    case "removepac": {
+                    case "removerpac": {
                         print("ID DO PACIENTE: ");
                         int idpac = number(input());
                         print("NOME DO PACIENTE: ");
                         String nomePac = input();
                         clinica.removerPaciente(idpac, nomePac);
+                        break;
+                    }
+                    case "removermed": {
+                        print("NOME DO MEDICO: ");
+                        String nomeMed = input();
+                        clinica.removerMedico(nomeMed);
                         break;
                     }
                     default:
