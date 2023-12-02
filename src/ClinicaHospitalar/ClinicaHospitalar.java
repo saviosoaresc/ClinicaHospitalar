@@ -5,13 +5,6 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Scanner;
-
-
-
-//frase de teste
-
-
-
 /**
  *
  * @author savio
