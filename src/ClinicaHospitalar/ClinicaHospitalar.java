@@ -5,28 +5,31 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 /**
  *
  * @author savio
  */
-//no show dps q adiona um Pac, a saida eh duplicada
+
+
+
+
 //erro no diagnostico, ele so pega a ultima palavra
+
+
+
+
 public class ClinicaHospitalar {
 
     public static void main(String args[]) throws SQLException, Exception {
         Clinica clinica = new Clinica();
         Sql sql = new Sql();
 
-        System.out.println("======== SHELL ========");
-        System.out.println("$addMed nome telefone especializacao");
-        System.out.println("$addPac nome telefone diagnostico");
-        System.out.println("$diagnostico seu-problema");
-        System.out.println("$addCons");
-        System.out.println("$remarcarCons");
-        System.out.println("$infoPac idPac nomePac");
-        System.out.println("$infoMed nomeMed");
-        System.out.println("$removeCons");
+        System.out.println("======== COMANDOS ========");
+        System.out.println("- addPac    - addMed     - addCons");
+        System.out.println("- infoPac   - infoMed    - remarcarCons");
+        System.out.println("- removePac   - removeMed  - removeCons");
+        System.out.println("- diagosnito  - show   - end   - cls");
+        
 
         while (true) {
             String line = input();
@@ -69,23 +72,16 @@ public class ClinicaHospitalar {
                     }
                     case "show":
                         print(clinica.toString());
-                        println(sql.pesquisaConsulta());
+                        print(sql.pesquisaConsulta());
                         break;
                     case "diagnostico": {
-                        String diag = "";
-                        Label saida;
-                        for (int i = 0; i < arg.length; i++) {
-                            if (i >= 1) {
-                                diag += arg[i] + " ";
-                            }
-                        }
-                        saida = Label.verificarEspecialidade(diag);
+                        print("Diagnostico do paciente: ");
+                        String diag = input();
+                        Label saida = Label.verificarEspecialidade(diag);
                         println("==== " + saida + " ====\nMedico(s): " + clinica.getMedicosPorEspecialidade(saida));
                         break;
                     }
                     case "addcons": {
-                        //addCons particular
-                        //addCons plano
                         println("PLANO OU PARTICULAR? ");
                         String opcao = input();
                         switch (opcao.toUpperCase()) {
@@ -153,11 +149,17 @@ public class ClinicaHospitalar {
                     }
                     //quando um paciente tem mais de uma consulta ela eh repetida
                     case "infopac": {
-                        println(clinica.infoPaciente(number(arg[1]), arg[2]));
+                        print("ID DO PACIENTE: ");
+                        int numRegPac = number(input());
+                        print("NOME DO PACIENTE: ");
+                        String nomePac = input();
+                        println(clinica.infoPaciente(numRegPac, nomePac));
                         break;
                     }
                     case "infomed": {
-                        println(clinica.infoMedico(arg[1]));
+                        print("NOME DO MEDICO: ");
+                        String nomeMed = input();
+                        println(clinica.infoMedico(nomeMed));
                         break;
                     }
                     case "removecons": {

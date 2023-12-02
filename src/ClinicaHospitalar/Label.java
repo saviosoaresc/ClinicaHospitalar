@@ -21,9 +21,9 @@ public enum Label {
                 case "aneurisma":
                 case "infarto":
                 case "hipertensao":
-                case "arritmia":
-                    label = CARDIOLOGISTA;
-                    break;
+                case "arritmia": {
+                    return CARDIOLOGISTA;
+                }
                 case "pele":
                 case "manchas":
                 case "impetigo":
@@ -37,9 +37,9 @@ public enum Label {
                 case "melanoma":
                 case "vitiligo":
                 case "acne":
-                case "cutaneas":
-                    label = DERMATOLOGISTA;
-                    break;
+                case "cutaneas":{
+                    return DERMATOLOGISTA;                   
+                }
                 case "cerebro":
                 case "encefalite":
                 case "ataxia":
@@ -58,13 +58,26 @@ public enum Label {
                 case "neuromuscular":
                 case "cefalia":
                 case "huntinton":
-                case "tomografia":
-                    label = NEUROLOGISTA;
-                    break;
-//                case "dente", "oral", "siso", "bucal", "dentaria", "halito", "gengivite", "protese", "periodental", "carie", "dentario", "bruxismo", "canal", "dentista", "endodentia", "clareamento": {
-//                    label = ODONTOLOGISTA;
-//                    break;
-//                }
+                case "tomografia":{
+                    return NEUROLOGISTA;                    
+                }
+                case "clareamento":
+                case "endodentia":
+                case "dentista":
+                case "canal":
+                case "bruxismo":
+                case "dentario":
+                case "carie":
+                case "periodental":
+                case "dentaria":
+                case "protese":
+                case "bucal":
+                case "halito":
+                case "oral":
+                case "gengivite":
+                case "siso":{
+                    return ODONTOLOGISTA;                    
+                }
 //                case "olho", "lente", "esclerite", "lentes", "visual", "pterigio", "cornea", "estrabismo", "catarata", "conjuntivite", "glaucoma", "retina", "retinopexia", "fundoscopia", "miopia", "refracao", "visao", "vista", "lagrima", "astigmatismo", "retinopatia": {
 //                    label = OFTALMOLOGISTA;
 //                    break;
