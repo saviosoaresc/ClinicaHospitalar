@@ -37,8 +37,8 @@ public enum Label {
                 case "melanoma":
                 case "vitiligo":
                 case "acne":
-                case "cutaneas":{
-                    return DERMATOLOGISTA;                   
+                case "cutaneas": {
+                    return DERMATOLOGISTA;
                 }
                 case "cerebro":
                 case "encefalite":
@@ -58,8 +58,8 @@ public enum Label {
                 case "neuromuscular":
                 case "cefalia":
                 case "huntinton":
-                case "tomografia":{
-                    return NEUROLOGISTA;                    
+                case "tomografia": {
+                    return NEUROLOGISTA;
                 }
                 case "clareamento":
                 case "endodentia":
@@ -75,17 +75,46 @@ public enum Label {
                 case "halito":
                 case "oral":
                 case "gengivite":
-                case "siso":{
-                    return ODONTOLOGISTA;                    
+                case "siso": {
+                    return ODONTOLOGISTA;
                 }
-//                case "olho", "lente", "esclerite", "lentes", "visual", "pterigio", "cornea", "estrabismo", "catarata", "conjuntivite", "glaucoma", "retina", "retinopexia", "fundoscopia", "miopia", "refracao", "visao", "vista", "lagrima", "astigmatismo", "retinopatia": {
-//                    label = OFTALMOLOGISTA;
-//                    break;
-//                }
-//                case "utero", "ciclo", "menstrual", "menstruacao", "gravidez", "colo", "anticoncepcional", "dst", "urinaria", "mama", "mulher", "menopausa": {
-//                    label = GINECOLOGISTA;
-//                    break;
-//                }
+                case "refracao":
+                case "miopia":
+                case "fundoscopia":
+                case "retinopexia":
+                case "lente":
+                case "pterigio":
+                case "retina":
+                case "conjuntivite":
+                case "esclerite":
+                case "lentes":
+                case "cornea":
+                case "visual":
+                case "catarata":
+                case "estrabismo":
+                case "glaucoma":
+                case "visao":
+                case "astigmatismo":
+                case "retinopatia":
+                case "lagrima":
+                case "vista":
+                case "olho": {
+                    return OFTALMOLOGISTA;
+                }
+                case "gravidez":
+                case "menopausa":
+                case "mulher":
+                case "mama":
+                case "urinaria":
+                case "dst":
+                case "anticoncepcional":
+                case "colo":
+                case "menstruacao":
+                case "menstrual":
+                case "utero":
+                case "ciclo": {
+                    return GINECOLOGISTA;
+                }
                 default:
                     label = GERAL;
             }
