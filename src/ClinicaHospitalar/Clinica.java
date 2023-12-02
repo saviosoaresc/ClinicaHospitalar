@@ -127,7 +127,6 @@ public class Clinica {
         if (pac.consulta != null) {
             System.out.print(nomePac.toUpperCase() + " tem consulta existente, deseja exclui-la?(s/n) ");
             String confirmar = ClinicaHospitalar.input();
-//            int confirmar = JOptionPane.showConfirmDialog(null, (nomePac + " tem uma consulta existente, deseja exclui-la?"), "Exclua a consulta para deletar um Paciente", JOptionPane.YES_NO_OPTION);
             if (confirmar.equals("s")) {
                 int idpac = idPac;
                 sql.removerConsulta(idpac, nomePac);
@@ -136,7 +135,19 @@ public class Clinica {
         int idpac = idPac;
         sql.removerPaciente(idpac, nomePac);
     }
-
+    
+    public void removerMedico(String nomeMed) throws Exception {
+        Medico med = existeMed(nomeMed);
+        if (med == null) {
+            throw new Exception("Medico " + nomeMed + " inexistente.");
+        }
+        sql.removerMedico(nomeMed);
+        if (med.consulta != null) {
+            ClinicaHospitalar.println(nomeMed.toUpperCase() + " tem consulta existente, avise aos seguintes pacientes: ");
+            ClinicaHospitalar.print(sql.getNomeDoPacienteNaConsultaDoMedico(nomeMed));
+        }        
+    }
+    
     @Override
     public String toString() {
         String saida = "";
