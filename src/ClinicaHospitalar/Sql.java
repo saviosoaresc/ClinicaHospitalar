@@ -56,7 +56,7 @@ public class Sql {
     }
 
     public ArrayList<Paciente> updateListPac(ArrayList<Paciente> pacientes) throws SQLException {
-        String sql = "SELECT * FROM pacientes";
+        String sql = "SELECT * FROM pacientes ORDER BY numero_registro_paciente ASC";
         pst = connection.prepareStatement(sql);
         rs = pst.executeQuery();
 
@@ -89,7 +89,7 @@ public class Sql {
     public void addConsultaNoPaciente(int id) throws SQLException {
         String sql = "UPDATE pacientes"
                 + " SET lista_consultas = COALESCE(lista_consultas, '') ||"
-                + " CONCAT(nomemed, ' -> ', datacons, ' -> ', tipo)"
+                + " CONCAT(nomemed, ' -> ', datacons, ' -> ', tipo, ' + ')"
                 + " FROM consultas"
                 + " WHERE consultas.idpac = ? and pacientes.numero_registro_paciente = ?";
         try {
@@ -142,7 +142,7 @@ public class Sql {
             pst.setString(2, telefone);
             pst.setString(3, especializacao.name());
             pst.executeUpdate();
-            ClinicaHospitalar.print("Medico adicionado!");
+            ClinicaHospitalar.println("Medico adicionado!");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -157,7 +157,7 @@ public class Sql {
     }
 
     public ArrayList<Medico> updateListMed(ArrayList<Medico> medicos) throws SQLException, Exception {
-        String sql = "SELECT * FROM medicos";
+        String sql = "SELECT * FROM medicos  ORDER BY numero_registro_medico ASC";
         pst = connection.prepareStatement(sql);
         rs = pst.executeQuery();
 
@@ -191,7 +191,7 @@ public class Sql {
     public void addConsultaNoMedico(String nome) {
         String sql = "UPDATE medicos"
                 + " SET lista_pacientes = COALESCE(lista_pacientes, '') ||"
-                + " CONCAT(consultas.nomepac, ' -> ', consultas.datacons, ' -> ', consultas.diagnostico)"
+                + " CONCAT(consultas.nomepac, ' -> ', consultas.datacons, ' -> ', consultas.diagnostico, ' + ')"
                 + " FROM consultas"
                 + " WHERE consultas.nomemed = ? and medicos.nome = ?";
         try {
@@ -285,14 +285,15 @@ public class Sql {
         }
     }
 
-    public void remarcarConsulta(int idPac, String nomePac, String data) {
+    public void remarcarConsulta(int idPac, String nomePac, String nomeMed, String data) {
         String sql = "UPDATE consultas SET datacons = ?"
-                + " WHERE idpac = ? and nomepac = ?";
+                + " WHERE idpac = ? and nomepac = ? and nomemed = ?";
         try {
             pst = connection.prepareStatement(sql);
             pst.setString(1, data);
             pst.setInt(2, idPac);
             pst.setString(3, nomePac);
+            pst.setString(4, nomeMed);
             pst.executeUpdate();
             ClinicaHospitalar.println("Data alterada!");
         } catch (SQLException e) {
@@ -308,7 +309,30 @@ public class Sql {
         }
     }
 
-    public void removerConsulta(int idPac, String nomePac) {
+    public void removerConsultaGeral(int idPac, String nomePac, String nomeMed) {
+        String sql = "DELETE FROM consultas"
+                + " WHERE idpac = ? AND nomepac = ? AND nomemed = ?";
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1, idPac);
+            pst.setString(2, nomePac);
+            pst.setString(3, nomeMed);
+            pst.executeUpdate();
+            ClinicaHospitalar.println("Consulta com " + nomePac + " deletado");
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+    }
+    
+    public void removerConsultadoPaciente(int idPac, String nomePac) {
         String sql = "DELETE FROM consultas"
                 + " WHERE idpac = ? AND nomepac = ?";
         try {
