@@ -87,6 +87,9 @@ public class Clinica {
                 saida += "[" + med.nome + "]";
             }
         }
+        if(saida.equals("")){
+            return "Vazio";
+        }
         return saida;
     }
 
@@ -125,11 +128,11 @@ public class Clinica {
             throw new Exception("Paciente " + nomePac + " com id " + idPac + " inexistente.");
         }
         if (pac.consulta != null) {
-            System.out.print(nomePac.toUpperCase() + " tem consulta existente, deseja exclui-la?(s/n) ");
+            System.out.print(nomePac.toUpperCase() + " tem consulta(s) existente(s), deseja exclui-la(s)? (s/n) ");
             String confirmar = ClinicaHospitalar.input();
             if (confirmar.equals("s")) {
                 int idpac = idPac;
-                sql.removerConsulta(idpac, nomePac);
+                sql.removerConsultadoPaciente(idpac, nomePac);
             }
         }
         int idpac = idPac;
