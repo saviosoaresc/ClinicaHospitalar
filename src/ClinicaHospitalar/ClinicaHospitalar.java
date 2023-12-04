@@ -200,9 +200,9 @@ public class ClinicaHospitalar {
         return scanner.nextLine();
     }
 
-    private static int number(String value) {
-        return Integer.parseInt(value);
-    }
+    // private static int number(String value) {
+    //     return Integer.parseInt(value);
+    // }
 
     public static void println(Object value) {
         System.out.println(value);
