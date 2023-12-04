@@ -119,7 +119,7 @@ public class Sql {
             pst.setString(2, nomePac);
             pst.executeUpdate();
             //da um fail: comando invalido
-            ClinicaHospitalar.print("Paciente " + nomePac + " deletado");
+            ClinicaHospitalar.println("Paciente " + nomePac + " deletado");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
