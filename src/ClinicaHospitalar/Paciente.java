@@ -1,7 +1,7 @@
 package ClinicaHospitalar;
 
 import java.sql.SQLException;
-import java.util.*;
+// import java.util.*;
 
 public class Paciente extends Pessoa {
 
