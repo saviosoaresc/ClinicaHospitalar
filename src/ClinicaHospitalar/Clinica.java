@@ -1,3 +1,4 @@
+
 package ClinicaHospitalar;
 
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class Clinica {
         }
 
         sql.adicionarMedico(
-                ((Medico) pessoa).nome,
+                 ((Medico) pessoa).nome,
                 ((Medico) pessoa).telefone,
                 ((Medico) pessoa).especializacao);
     }
