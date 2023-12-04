@@ -48,9 +48,9 @@ public class ClinicaHospitalar {
                                 + "- OFTALMOLOGISTA - ODONTOLOGISTA\n- GERAL");
                         print("QUAL A ESPECIALIZACAO? ");
                         String especializacao = input();
-                        
+
                         //passa um Medico para adicionar, converte a especializacao para um ENUM, e inicia o paciente dele como null
-                        clinica.addPessoa(new Medico(nome, telefone, Label.converter(especializacao), null));
+                        clinica.addPessoa(new Medico(nome.toLowerCase(), telefone, Label.converter(especializacao), null));
                         break;
                     }
                     case "addpac": {
@@ -60,9 +60,9 @@ public class ClinicaHospitalar {
                         String telefone = input();
                         print("DIAGNOSTICO: ");
                         String problema = input();
-                        
+
                         //passa um Paciente para adicionar e inicia a consulta dele como null
-                        clinica.addPessoa(new Paciente(nome, telefone, problema, null));
+                        clinica.addPessoa(new Paciente(nome.toLowerCase(), telefone, problema.toLowerCase(), null));
                         break;
                     }
                     case "show":
@@ -92,7 +92,7 @@ public class ClinicaHospitalar {
                                     print("NOME DO PACIENTE: ");
                                     String nomePac = input();
                                     //existePac retorna um Paciente, e ve se existe ou nao o paciente passando o numero_de_registro e o nome do paciente
-                                    Paciente pac = clinica.existePac(numRegPac, nomePac);
+                                    Paciente pac = clinica.existePac(numRegPac, nomePac.toLowerCase());
                                     //se nao tiver paciente
                                     if (pac == null) {
                                         println("Paciente Inexistente");
@@ -101,7 +101,7 @@ public class ClinicaHospitalar {
                                     print("NOME DO MEDICO: ");
                                     String nomeMed = input();
                                     //existeMed retorna um Medico, e ve se existe ou nao o medico passando o numero_de_registro e o nome do medico
-                                    Medico med = clinica.existeMed(nomeMed);
+                                    Medico med = clinica.existeMed(nomeMed.toLowerCase());
                                     //se nao tiver medico
                                     if (med == null) {
                                         println("Medico Inexistente");
@@ -122,14 +122,14 @@ public class ClinicaHospitalar {
                                 if (numRegPac != -1) {
                                     print("NOME DO PACIENTE: ");
                                     String nomePac = input();
-                                    Paciente pac = clinica.existePac(numRegPac, nomePac);
+                                    Paciente pac = clinica.existePac(numRegPac, nomePac.toLowerCase());
                                     if (pac == null) {
                                         println("Paciente Inexistente");
                                         break;
                                     }
                                     print("NOME DO MEDICO: ");
                                     String nomeMed = input();
-                                    Medico med = clinica.existeMed(nomeMed);
+                                    Medico med = clinica.existeMed(nomeMed.toLowerCase());
                                     if (med == null) {
                                         println("Medico Inexistente");
                                         break;
@@ -139,7 +139,7 @@ public class ClinicaHospitalar {
                                     print("NOME DO PLANO: ");
                                     String nomePlan = input();
                                     //adiciona uma consulta passando um Objeto do tipo Plano que eh a classe filha de Consulta
-                                    clinica.addConsulta(new Plano(pac, med, data, pac.problema, nomePlan));
+                                    clinica.addConsulta(new Plano(pac, med, data, pac.problema, nomePlan.toUpperCase()));
                                     break;
                                 }
                                 break;
@@ -156,10 +156,10 @@ public class ClinicaHospitalar {
                             String nomePac = input();
                             print("NOME DO MEDICO: ");
                             String nomeMed = input();
-                            print("DATA: ");
+                            print("NOVA DATA: ");
                             String data = input();
                             // vai no sql e remarca a consulta passando o numero_registro_paciente, nome_paciente, nome_medico e a data a ser remarcada
-                            sql.remarcarConsulta(numRegPac, nomePac, nomeMed, data);
+                            sql.remarcarConsulta(numRegPac, nomePac.toLowerCase(), nomeMed.toLowerCase(), data);
                         }
                         break;
                     }
@@ -169,7 +169,7 @@ public class ClinicaHospitalar {
                             print("NOME DO PACIENTE: ");
                             String nomePac = input();
                             //mostra todas as informacoes do paciente com o id indicado
-                            println(clinica.infoPaciente(numRegPac, nomePac));
+                            println(clinica.infoPaciente(numRegPac, nomePac.toLowerCase()));
                         }
                         break;
                     }
@@ -177,7 +177,7 @@ public class ClinicaHospitalar {
                         print("NOME DO MEDICO: ");
                         String nomeMed = input();
                         //mostra todas as informacoes do medico
-                        println(clinica.infoMedico(nomeMed));
+                        println(clinica.infoMedico(nomeMed.toLowerCase()));
                         break;
                     }
                     case "removercons": {
@@ -185,10 +185,18 @@ public class ClinicaHospitalar {
                         if (numRegPac != -1) {
                             print("NOME DO PACIENTE: ");
                             String nomePac = input();
+                            if (clinica.existePac(numRegPac, nomePac.toLowerCase()) == null) {
+                                println("Paciente Inexistente.");
+                                break;
+                            }
                             print("NOME DO MEDICO: ");
                             String nomeMed = input();
+                            if (clinica.existeMed(nomeMed.toLowerCase()) == null) {
+                                println("Medico Inexistente.");
+                                break;
+                            }
                             //remove a consulta passando o numero_registro, nome do paciente e o nome do medico
-                            sql.removerConsultaGeral(numRegPac, nomePac, nomeMed);
+                            sql.removerConsultaGeral(numRegPac, nomePac.toLowerCase(), nomeMed.toLowerCase());
                         }
                         break;
                     }
@@ -198,7 +206,7 @@ public class ClinicaHospitalar {
                             print("NOME DO PACIENTE: ");
                             String nomePac = input();
                             //remove o paciente passando o numero_registro e o nome do paciente
-                            clinica.removerPaciente(idpac, nomePac);
+                            clinica.removerPaciente(idpac, nomePac.toLowerCase());
                         }
                         break;
                     }
@@ -206,7 +214,7 @@ public class ClinicaHospitalar {
                         print("NOME DO MEDICO: ");
                         String nomeMed = input();
                         //remove o medico passando o numero_registro e o nome do medico
-                        clinica.removerMedico(nomeMed);
+                        clinica.removerMedico(nomeMed.toLowerCase());
                         break;
                     }
                     default:
@@ -235,7 +243,7 @@ public class ClinicaHospitalar {
         println("======== COMANDOS ========");
         println("- addPac    - addMed     - addCons");
         println("- infoPac   - infoMed    - remarcarCons");
-        println("- removePac   - removeMed  - removeCons");
+        println("- removerPac   - removerMed  - removerCons");
         println("- diagosnito  - show   - end   - cls");
     }
 
