@@ -1,5 +1,3 @@
-// teste
-
 package ClinicaHospitalar;
 
 public enum Label {
