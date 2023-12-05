@@ -4,9 +4,16 @@ public enum Label {
     CARDIOLOGISTA, DERMATOLOGISTA, NEUROLOGISTA, OFTALMOLOGISTA, ODONTOLOGISTA,
     GERAL, GINECOLOGISTA;
 
+    // um array de string que recebe a string diag e separa ela em palavras por um espaco em branco
+    // um for que percorre o array de string
+    // e verifica se a palavra esta contida em uma das especialidades
+    // se estiver, retorna a especialidade
+    // se nao estiver, retorna a especialidade geral
     static Label verificarEspecialidade(String diag) throws Exception {
+
         String[] arg = diag.split(" ");
         Label label = null;
+
         for (String arg1 : arg) {
             switch (arg1) {
                 case "coracao":
@@ -122,6 +129,9 @@ public enum Label {
         return label;
     }
 
+    // um switch que recebe a string label e verifica se ela esta contida em uma das especialidades
+    // se estiver, retorna a especialidade
+    // se nao estiver, retorna uma excecao de especialidade nao encontrada
     static Label converter(String label) throws Exception {
         switch (label.toLowerCase()) {
             case "dermatologista": {
