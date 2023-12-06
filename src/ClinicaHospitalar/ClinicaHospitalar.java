@@ -14,7 +14,7 @@ public class ClinicaHospitalar {
 
     public static void main(String args[]) throws SQLException, Exception {
         Clinica clinica = new Clinica();
-        Sql sql = new Sql();
+        Sql sql = new Sql();// Banco de dados
 
         //chama os comando a ser mostrado ao usuario
         showComandos();
