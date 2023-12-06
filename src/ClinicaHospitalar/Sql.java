@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import java.util.*;
 
 /**
@@ -19,28 +18,36 @@ public class Sql {
     ResultSet rs = null;
 
 //======================= PACIENTE ==================================
+    // adiciona paciente no banco de dados
     public void adicionarPaciente(String nome, String telefone, String problema) {
+        // comando sql
         String sql = "insert into pacientes(nome, telefone, problema) values(?, ?, ?)";
         try {
+            // prepara o comando sql para ser executado no banco de dados
             pst = connection.prepareStatement(sql);
+            // substitui os ? pelos valores passados
             pst.setString(1, nome);
             pst.setString(2, telefone);
             pst.setString(3, problema);
+            // executa o comando sql
             pst.executeUpdate();
             ClinicaHospitalar.println("Paciente adicionado!");
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
             try {
+                // fecha a conexao com o banco de dados
                 if (pst != null) {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
 
+    // pesquisa paciente no banco de dados
+    // retorna uma string com os dados do paciente
     public String pesquisaPac() throws SQLException {
         String sql = "select * from pacientes";
         String titlePac = "==== Pacientes ====\n";
@@ -55,6 +62,8 @@ public class Sql {
 
     }
 
+    // atualiza a lista de pacientes
+    // retorna um arraylist com os pacientes do banco de dados
     public ArrayList<Paciente> updateListPac(ArrayList<Paciente> pacientes) throws SQLException {
         String sql = "SELECT * FROM pacientes ORDER BY numero_registro_paciente ASC";
         pst = connection.prepareStatement(sql);
@@ -65,12 +74,14 @@ public class Sql {
             String telefone = rs.getString(3);
             String problema = rs.getString(4);
             String listaConsulta = rs.getString(5);
-            Paciente paciente = new Paciente(nome, telefone, problema, listaConsulta);
-            pacientes.add(paciente);
+            pacientes.add(new Paciente(nome, telefone, problema, listaConsulta));
         }
         return pacientes;
     }
 
+    // recebe o nome e o telefone do paciente
+    // retorna o id do paciente de acordo com o nome e o telefone passados como parametro
+    // retorna -1 se nao encontrar o paciente
     public int getIdPac(String nome, String telefone) throws SQLException {
         String sql = "SELECT numero_registro_paciente FROM pacientes WHERE "
                 + "nome = ? and telefone = ?";
@@ -83,9 +94,11 @@ public class Sql {
             return rs.getInt(1);
         }
 
-        return 0;
+        return -1;
     }
 
+    // adiciona a consulta no paciente
+    // adiciona a consulta no paciente de acordo com o id passado como parametro
     public void addConsultaNoPaciente(int id) throws SQLException {
         String sql = "UPDATE pacientes"
                 + " SET lista_consultas = COALESCE(lista_consultas, '') ||"
@@ -105,11 +118,13 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
 
+    // remove o paciente do banco de dados
+    // remove o paciente do banco de dados de acordo com o id e o nome passados como parametro
     public void removerPaciente(int idPac, String nomePac) {
         String sql = "DELETE FROM pacientes"
                 + " WHERE numero_registro_paciente = ? AND nome = ?";
@@ -128,12 +143,15 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
 
 //======================= MEDICO ==================================
+    // adiciona medico no banco de dados
+    // adiciona medico no banco de dados de acordo com o nome, telefone e especializacao passados como parametro
+    // especializacao eh um enum
     public void adicionarMedico(String nome, String telefone, Label especializacao) {
         String sql = "insert into medicos(nome, telefone, especializacao) values(?, ?, ?)";
         try {
@@ -151,11 +169,13 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
 
+    // pesquisa medico no banco de dados
+    // retorna um arraylist com os medicos do banco de dados
     public ArrayList<Medico> updateListMed(ArrayList<Medico> medicos) throws SQLException, Exception {
         String sql = "SELECT * FROM medicos  ORDER BY numero_registro_medico ASC";
         pst = connection.prepareStatement(sql);
@@ -173,6 +193,7 @@ public class Sql {
         return medicos;
     }
 
+    // retorna o id do medico de acordo com o nome e o telefone passados como parametro
     public int getIdMed(String nome, String telefone) throws SQLException {
         String sql = "SELECT numero_registro_medico FROM medicos WHERE "
                 + "nome = ? and telefone = ?";
@@ -188,6 +209,8 @@ public class Sql {
         return 0;
     }
 
+    // adiciona a consulta no medico
+    // adiciona a consulta no medico de acordo com o nome passado como parametro
     public void addConsultaNoMedico(String nome) {
         String sql = "UPDATE medicos"
                 + " SET lista_pacientes = COALESCE(lista_pacientes, '') ||"
@@ -207,11 +230,12 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
 
+    // remove o medico do banco de dados de acordo com o nome passado como parametro
     public void removerMedico(String nomeMed) {
         String sql = "DELETE FROM medicos"
                 + " WHERE nome = ?";
@@ -228,12 +252,14 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
 
 //======================= CONSULTA ==================================
+    // adiciona consulta no banco de dados de acordo com o id do paciente, nome do paciente, nome do medico, especializacao,
+    // diagnostico, data da consulta, tipo e valor passados como parametro
     public void adicionarConsulta(int idPac, String nomePac, String nomeMed, Label especializacao, String diagnostico, String dataCons, String tipo, double valor) {
         String sql = "insert into consultas values(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -257,7 +283,7 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
@@ -304,7 +330,7 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
@@ -327,7 +353,7 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
@@ -349,7 +375,7 @@ public class Sql {
                     pst.close();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                System.out.print(ex);
             }
         }
     }
