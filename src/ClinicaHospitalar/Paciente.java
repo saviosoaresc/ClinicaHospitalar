@@ -17,6 +17,8 @@ public class Paciente extends Pessoa {
         numeroRegistroPaciente = sql.getIdPac(nome, telefone);
     }
 
+    // INFORMACOES DO PACIENTE
+    // se nao tiver consulta, retorna "Empty"
     public String infoPaciente() {
         String saida = "==== " + this.nome.toUpperCase() + " ====\n"
                 + "ID: " + numeroRegistroPaciente
