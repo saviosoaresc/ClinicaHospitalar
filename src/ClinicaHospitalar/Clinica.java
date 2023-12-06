@@ -2,8 +2,6 @@ package ClinicaHospitalar;
 
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Clinica {
     private List<Paciente> pacientes = new ArrayList<>();
@@ -163,7 +161,7 @@ public class Clinica {
         sql.removerPaciente(idpac, nomePac);
     }
 
-    // REMOVER MEDICO
+    // REMOVER MEDICO -> Manipulação de Dados e Informações
     // se o medico existir, remove o medico
     // se nao, retorna uma excecao
     // se o medico tiver consulta, avise-o que ele tem consulta existente e pegue o nome do paciente
