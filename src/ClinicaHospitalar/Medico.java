@@ -1,7 +1,6 @@
 package ClinicaHospitalar;
 
 import java.sql.SQLException;
-// import java.util.*;
 
 public class Medico extends Pessoa {
 
@@ -16,6 +15,8 @@ public class Medico extends Pessoa {
         numeroRegistroMedico = sql.getIdMed(nome, telefone);
     }
 
+    // INFORMACOES DO MEDICO
+    // se nao tiver consulta, retorna "Empty"
     public String infoMedico() {
         String saida = "==== " + this.nome.toUpperCase() + " ====\n"
                 + "CRM: " + numeroRegistroMedico
