@@ -4,10 +4,10 @@ remarcar consultas e cancelar consultas.
 
 SHELL
 //adicionar medico
-addMed nome telefone especialidade
+addMed
 
 //adicionar paciente
-$addPac nome telefone diagnostico
+$addPac
 
 //show
 $show
@@ -18,27 +18,26 @@ $show
 ===== Consultas ====
 [Paciente: 594/joao, Medico: caio/OFTALMOLOGISTA, Diagnostico: prostata, Tipo: 500.0, Data: 19/12/2023]
 
-
-
 //verificar qual especialidade eh mais recomendado pro paciente
-$diagnostico diagnostico
+$diagnostico
 
 //adicionar consulta
-$addCons idPac nomePac nomeMed data
+$addCons
 
 //remarcar consulta
-$remarcarCons idPac nomePac
+$remarcarCons
 
 // informacoes do Paciente
-$infoPac idPac nomePac
+$infoPac
 
 // informacoes do Medicos
-$infoMed nomeMed
+$infoMed
 
 //cancelar consulta
-$cancelarCons idPac nomePac
+$cancelarCons
 
 //remover paciente 
-$removePac idPac nomePac
+$removerPac
 
-======================================= FAZER ==================================
+//remover medico
+$removerMed
