@@ -156,6 +156,7 @@ public enum Label {
                 return Label.GINECOLOGISTA;
             }
             default:
+            // se nao estiver, retorna uma excecao de especialidade nao encontrada
                 throw new Exception("Especialidade nao existe no nosso banco de dados");
         }
     }
