@@ -1,7 +1,6 @@
 package ClinicaHospitalar;
 
 import java.sql.SQLException;
-// import java.util.*;
 
 public class Paciente extends Pessoa {
 
@@ -10,7 +9,7 @@ public class Paciente extends Pessoa {
     
     Sql sql = new  Sql();
     
-    
+    // CONSTRUTOR DO PACIENTE
     public Paciente(String nome, String telefone, String problema, String consulta) throws SQLException {
         super(nome, telefone, consulta);
         this.problema = problema;
