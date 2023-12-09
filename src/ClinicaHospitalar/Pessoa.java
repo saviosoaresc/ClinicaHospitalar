@@ -5,6 +5,7 @@ public class Pessoa {
     protected String telefone;
     protected String consulta;
     
+    // CONSTRUTOR DA PESSOA
     public Pessoa(String nome, String telefone, String consulta){
         this.nome = nome;
         this.telefone = telefone;
