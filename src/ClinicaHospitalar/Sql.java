@@ -13,8 +13,11 @@ import java.util.*;
  */
 public class Sql {
 
+    // conexao com o banco de dados
     Connection connection = Conexao.conector();
+    // comando sql a ser executado
     PreparedStatement pst;
+    // resultado da pesquisa no banco de dados
     ResultSet rs = null;
 
 //======================= PACIENTE ==================================
