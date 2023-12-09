@@ -9,6 +9,7 @@ public class Medico extends Pessoa {
 
     Sql sql = new Sql();
 
+    // CONSTRUTOR DO MEDICO
     Medico(String nome, String telefone, Label especializacao, String consulta) throws SQLException {
         super(nome, telefone, consulta);
         this.especializacao = especializacao;
