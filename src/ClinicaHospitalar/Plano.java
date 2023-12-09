@@ -3,6 +3,7 @@ package ClinicaHospitalar;
 public class Plano extends Consulta{
     protected String nomePlano; 
     
+    // CONSTRUTOR DA CONSULTA PELO PLANO
     public Plano(Paciente paciente, Medico medico, String data, String diagnostico, String nomePlano) {
         super(paciente, medico, data, diagnostico);
         this.nomePlano = nomePlano;
