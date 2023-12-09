@@ -5,7 +5,6 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 /**
  *
  * @author savio
@@ -24,9 +23,10 @@ public class ClinicaHospitalar {
             println("$" + line);
             String[] arg = line.split(" ");
 
-            //atualiza os ArraysLists pacientes e medicos
+            //atualiza as listas: pacientes e medicos
             clinica.update();
             try {
+                //verifica qual comando foi digitado e executa o comando correspondente a ele, transformando-o em minusculo para nao dar erro
                 switch (arg[0].toLowerCase()) {
                     case "cls": {
                         //limpar o terminal
